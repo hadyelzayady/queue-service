@@ -1,0 +1,85 @@
+#*************************************************************************
+
+# Queue Apis
+
+#*************************************************************************
+# List Queues
+GET http://localhost:3000/api/queues/all
+
+# Create Queue
+POST http://localhost:3000/api/queues/add
+Content-Type: application/json
+
+{
+  "name": "myqueue",
+  "batchSize": 3
+}
+
+
+#*************************************************************************
+
+# Get Messages
+
+#*************************************************************************
+GET http://localhost:3000/api/queues/64fb6c07195bd36a87d72580/messages
+
+#*************************************************************************
+
+# Produce Message
+
+#*************************************************************************
+POST http://localhost:3000/api/messages/produce
+Content-Type: application/json
+
+{
+  "queueId": "64fb6c07195bd36a87d72580",
+  "body": "hell world 1"
+}
+
+# Produce Messaglddie
+POST http://localhost:3000/api/messages/produce
+Content-Type: application/json
+
+{
+  "queueId": "64fb6c07195bd36a87d72580",
+  "body": "hell world 2"
+}
+
+# Produce Message
+POST http://localhost:3000/api/messages/produce
+Content-Type: application/json
+
+{
+  "queueId": "64fb6c07195bd36a87d72580",
+  "body": "hell world 3"
+}
+
+# Produce Messaglddie
+POST http://localhost:3000/api/messages/produce
+Content-Type: application/json
+
+{
+  "queueId": "64fb6c07195bd36a87d72580",
+  "body": "hell world 4"
+}
+
+#*************************************************************************
+
+# Consume Message
+
+#*************************************************************************
+
+POST http://localhost:3000/api/messages/consume
+Content-Type: application/json
+
+{
+  "queueId": "64fb6c07195bd36a87d72580"
+}
+
+#*************************************************************************
+
+# Delete Message
+
+#*************************************************************************
+DELETE http://localhost:3000/api/messages/64fb2aeefe3f0da04d8ecbe2/delete
+Content-Type: application/json

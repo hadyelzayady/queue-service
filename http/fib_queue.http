@@ -1,0 +1,92 @@
+@queueId = 651bde211bb0d4606e83f025
+@port = 5000
+#*************************************************************************
+
+# Queue Apis
+
+#*************************************************************************
+# List Queues
+GET http://localhost:{{port}}/api/queues/all
+
+# Create Queue
+POST http://localhost:{{port}}/api/queues/add
+Content-Type: application/json
+
+{
+  "name": "fib_calculator",
+  "batchSize": 3
+}
+
+
+#*************************************************************************
+
+# Get Messages
+
+#*************************************************************************
+GET http://localhost:{{port}}/api/queues/{{queueId}}/messages
+
+#*************************************************************************
+
+# Produce Message
+
+#*************************************************************************
+POST http://localhost:{{port}}/api/messages/produce
+Content-Type: application/json
+
+{
+  "queueId": "{{queueId}}",
+  "body": "hell world 1"
+}
+
+# Produce Messaglddie
+POST http://localhost:{{port}}/api/messages/produce
+Content-Type: application/json
+
+{
+  "queueId": "{{queueId}}",
+  "body": "hell world 2"
+}
+
+# Produce Message
+POST http://localhost:{{port}}/api/messages/produce
+Content-Type: application/json
+
+{
+  "queueId": "{{queueId}}",
+  "body": "hell world 3"
+}
+
+# Produce Messaglddie
+POST http://localhost:{{port}}/api/messages/produce
+Content-Type: application/json
+
+{
+  "queueId": "{{queueId}}",
+  "body": "hell world 4"
+}
+
+#*************************************************************************
+
+# Consume Message
+
+#*************************************************************************
+
+POST http://localhost:{{port}}/api/messages/consume
+Content-Type: application/json
+
+{
+  "queueId": "{{queueId}}"
+}
+
+#*************************************************************************
+
+# Delete Message
+
+#*************************************************************************
+DELETE http://localhost:{{port}}/api/messages/651c407d685c063bcd79fed2/delete
+Content-Type: application/json
+
+
+PATCH http://localhost:{{port}}/api/messages/{{queueId}}/handledSuccessfully
+Content-Type: application/json
+
