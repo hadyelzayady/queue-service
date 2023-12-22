@@ -6,10 +6,14 @@ import { IReq, IRes } from "../types/express/misc";
 import MessageQueueSerivce from "@src/services/MessageQueueService";
 import { ISqsMessageResource } from "../types/SqsMessage/ISqsMessageResource";
 import SqsMessageMapper from "@src/mappers/SqsMessageMapper";
+import SqsMapper from "@src/mappers/SqsMapper";
+import { ISqsQueueResource } from "../types/Sqs/Sqs";
 
-async function getAll(_: IReq, res: IRes<ISqsQueue[]>) {
+async function getAll(_: IReq, res: IRes<ISqsQueueResource[]>) {
 	const sqsQueues = await SqsQueueService.getAll();
-	return res.status(HttpStatusCodes.OK).json(sqsQueues);
+	return res
+		.status(HttpStatusCodes.OK)
+		.json(sqsQueues.map(SqsMapper.toResource));
 }
 
 async function add(req: IReq<ISqsQueue>, res: IRes<void>) {

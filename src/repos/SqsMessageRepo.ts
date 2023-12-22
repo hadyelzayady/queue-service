@@ -16,6 +16,7 @@ async function getAll(): Promise<ISqsMessage[]> {
 }
 
 async function inQueue(sqsQueue: ISqsMessage): Promise<ISqsMessage> {
+	console.log("create", sqsQueue);
 	const result = await SqsQueueMessageModel.create(sqsQueue);
 	return result;
 }

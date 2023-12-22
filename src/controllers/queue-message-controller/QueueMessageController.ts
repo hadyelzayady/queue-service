@@ -16,7 +16,7 @@ async function inQueueMessage(
 	res: IRes<ISqsMessageResource>,
 ) {
 	const inQueuMessageRequest = req.body;
-	console.log(req.body);
+	console.log('what body',req.body);
 	const result = await MessageQueueSerivce.inQueueMessage(inQueuMessageRequest);
 
 	const resource = SqsMessageMapper.toResource(result);

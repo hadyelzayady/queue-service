@@ -13,7 +13,7 @@ POST http://localhost:{{port}}/api/queues/add
 Content-Type: application/json
 
 {
-  "name": "fib_calculator",
+  "name": "order_service",
   "batchSize": 3
 }
 
