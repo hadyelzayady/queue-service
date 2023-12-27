@@ -13,7 +13,7 @@ POST http://localhost:{{port}}/api/queues/add
 Content-Type: application/json
 
 {
-  "name": "customer queue",
+  "name": "order queue",
   "batchSize": 1
 }
 
