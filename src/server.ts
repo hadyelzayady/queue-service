@@ -27,6 +27,9 @@ import cors from "cors";
 const app = express();
 
 app.use(cors());
+console.log("********************************** url **************")
+console.log(EnvVars)
+console.log("********************************** url **************")
 mongoose.connect(EnvVars.MongoUri).catch((err) => {
 	console.log("Error", err);
 });

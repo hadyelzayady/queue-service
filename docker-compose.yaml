@@ -1,28 +1,31 @@
 version: '2'
 
 services:
-  mongodb-primary:
+  lqs:
+    image: hadyelzayady1996/light-app-lqs:latest
+    networks:
+      - queue-service
+      - queue-db
+  mongodb:
     image: docker.io/bitnami/mongodb:7.0
-    ports:
-      - '27014:27017'
     environment:
-      - MONGODB_ADVERTISED_HOSTNAME=mongodb-primary
-      - MONGODB_REPLICA_SET_MODE=primary
-      - MONGODB_ROOT_PASSWORD=password
-      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGODB_ROOT_PASSWORD: password
     volumes:
       - 'mongodb_master_data:/bitnami/mongodb'
+    networks:
+      - queue-db
 
-  mongodb-secondary:
-    image: docker.io/bitnami/mongodb:7.0
-    depends_on:
-      - mongodb-primary
-    environment:
-      - MONGODB_ADVERTISED_HOSTNAME=mongodb-secondary
-      - MONGODB_REPLICA_SET_MODE=secondary
-      - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
-      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password
-      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+  # mongodb-secondary:
+  #   image: docker.io/bitnami/mongodb:7.0
+  #   depends_on:
+  #     - mongodb-primary
+  #   environment:
+  #     - MONGODB_ADVERTISED_HOSTNAME=mongodb-secondary
+  #     - MONGODB_REPLICA_SET_MODE=secondary
+  #     - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
+  #     - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password
+  #     - MONGODB_REPLICA_SET_KEY=replicasetkey123
 
   # mongodb-arbiter:
   #   image: docker.io/bitnami/mongodb:7.0
@@ -38,3 +41,8 @@ services:
 volumes:
   mongodb_master_data:
     driver: local
+
+networks:
+  queue-service:
+    name: queue-service
+  queue-db:

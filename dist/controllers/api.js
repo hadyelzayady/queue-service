@@ -1,0 +1,27 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const jet_validator_1 = __importDefault(require("jet-validator"));
+const Paths_1 = __importDefault(require("../constants/Paths"));
+const QueueController_1 = __importDefault(require("./queue-controller/QueueController"));
+const SqsQueue_1 = __importDefault(require("@src/models/SqsQueue"));
+const QueueMessageController_1 = __importDefault(require("./queue-message-controller/QueueMessageController"));
+const apiRouter = (0, express_1.Router)();
+const validate = (0, jet_validator_1.default)();
+const queueController = (0, express_1.Router)();
+const queueMessageController = (0, express_1.Router)();
+queueController.get(Paths_1.default.Queues.Get, QueueController_1.default.getAll);
+queueController.get(Paths_1.default.Queues.messages, QueueController_1.default.getQueueMessages);
+queueController.post(Paths_1.default.Queues.Add, validate(["name"]), QueueController_1.default.add);
+queueController.put(Paths_1.default.Queues.Update, validate(["queue", SqsQueue_1.default.isSqsQueueUpdate]), QueueController_1.default.update);
+queueController.delete(Paths_1.default.Queues.Delete, validate(["id", "number", "params"]), QueueController_1.default.delete);
+apiRouter.use(Paths_1.default.Queues.Base, queueController);
+queueMessageController.post(Paths_1.default.Messages.InQueue, QueueMessageController_1.default.inQueueMessage);
+queueMessageController.post(Paths_1.default.Messages.DeQueue, QueueMessageController_1.default.deQueueMessage);
+queueMessageController.delete(Paths_1.default.Messages.Delete, QueueMessageController_1.default.deleteMessage);
+queueMessageController.patch(Paths_1.default.Messages.messagesHandedSuccessfully, QueueMessageController_1.default.messagesHandledSuccessfully);
+apiRouter.use(Paths_1.default.Messages.Base, queueMessageController);
+exports.default = apiRouter;
