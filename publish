@@ -1,4 +1,10 @@
 #!/usr/bin/zsh
 
+source ~/.config/zsh/.zshenv
+
 docker build . -t hadyelzayady1996/light-app-lqs:latest && docker push hadyelzayady1996/light-app-lqs:latest
 
+
+scp  ~/projects/personal-projects/light-app/queue-service/docker-compose.yaml admin@$LIGHT_APP_EC2_URL:/home/admin/cloud/
+
+kitten ssh admin@$LIGHT_APP_EC2_URL -t "cd cloud && docker compose pull && docker compose up -d"
